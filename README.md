@@ -17,15 +17,15 @@
 ## Быстрый старт
 
 ```bash
-npm install
-npm run dev
+yarn install
+yarn dev
 ```
 
 > **Важно:** при локальной разработке D1/KV/R2 эмулируются через `wrangler dev`.
 
 ```bash
 # Локальная разработка с Wrangler (Workers-совместимая среда)
-npx wrangler pages dev --compatibility-date=2025-01-01
+yarn wrangler pages dev --compatibility-date=2025-01-01
 ```
 
 ## Cloudflare Bindings
@@ -34,32 +34,32 @@ npx wrangler pages dev --compatibility-date=2025-01-01
 
 1. Создайте D1 базу данных:
    ```bash
-   npx wrangler d1 create yogamaya-db
+   yarn wrangler d1 create yogamaya-db
    ```
    Скопируйте `database_id` в `wrangler.toml`.
 
 2. Создайте KV namespace:
    ```bash
-   npx wrangler kv namespace create yogamaya-kv
-   npx wrangler kv namespace create yogamaya-kv --preview
+   yarn wrangler kv namespace create yogamaya-kv
+   yarn wrangler kv namespace create yogamaya-kv --preview
    ```
    Скопируйте `id` и `preview_id` в `wrangler.toml`.
 
 3. Создайте R2 bucket:
    ```bash
-   npx wrangler r2 bucket create yogamaya-media
+   yarn wrangler r2 bucket create yogamaya-media
    ```
 
 4. Примените миграции:
    ```bash
-   npm run db:migrate:local   # локально
-   npm run db:migrate:remote  # продакшн
-   npm run db:seed:local      # тестовые данные
+   yarn db:migrate:local   # локально
+   yarn db:migrate:remote  # продакшн
+   yarn db:seed:local      # тестовые данные
    ```
 
 5. Установите секреты:
    ```bash
-   npx wrangler secret put TELEGRAM_BOT_TOKEN
+   yarn wrangler secret put TELEGRAM_BOT_TOKEN
    ```
 
 ## Структура
@@ -153,8 +153,8 @@ src/
 ## Деплой
 
 ```bash
-npm run build
-npm run cf:deploy
+yarn build
+yarn cf:deploy
 ```
 
 ## Дальнейшее развитие
