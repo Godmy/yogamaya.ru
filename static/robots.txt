@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /l/
+Disallow: /api/
+
+Sitemap: https://yogamaya.ru/sitemap.xml
