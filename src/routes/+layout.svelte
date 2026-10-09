@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import ThemeProvider from '$stylist/theme/component/atom/theme-provider/index.svelte';
 	import type { LayoutData } from './$types';
 
 	let { data, children }: { data: LayoutData; children: import('svelte').Snippet } = $props();
@@ -10,17 +11,19 @@
 	<meta name="description" content="Yoga Maya — клуб испанского языка «Испанский с мамой». Занятия для детей и взрослых." />
 </svelte:head>
 
-<div class="site-wrapper">
-	<Header />
-	<main class="site-main">
-		{@render children()}
-	</main>
-	<Footer
-		whatsapp={data.siteConfig.whatsapp}
-		telegram={data.siteConfig.telegram}
-		phone={data.siteConfig.phone}
-	/>
-</div>
+<ThemeProvider>
+	<div class="site-wrapper">
+		<Header />
+		<main class="site-main">
+			{@render children()}
+		</main>
+		<Footer
+			whatsapp={data.siteConfig.whatsapp}
+			telegram={data.siteConfig.telegram}
+			phone={data.siteConfig.phone}
+		/>
+	</div>
+</ThemeProvider>
 
 <style>
 	:global(*, *::before, *::after) { box-sizing: border-box; margin: 0; padding: 0; }
