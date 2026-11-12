@@ -134,5 +134,8 @@
 			grid-template-columns: 1fr;
 			gap: 2rem;
 		}
+
+		/* The menu sheet and the bottom bar already list the pages. */
+		.footer-nav { display: none; }
 	}
 </style>

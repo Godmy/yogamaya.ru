@@ -10,6 +10,8 @@ export const load: LayoutServerLoad = ({ platform, locals }) => {
 			phone: platform?.env?.PUBLIC_PHONE ?? ''
 		},
 		abVariant: locals.abVariant,
-		utmParams: locals.utmParams
+		utmParams: locals.utmParams,
+		locale: locals.locale,
+		viewer: locals.user ? { name: locals.user.name, role: locals.user.role } : null
 	};
 };

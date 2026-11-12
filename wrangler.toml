@@ -29,6 +29,14 @@ PUBLIC_WHATSAPP = "+79161234567"
 PUBLIC_TELEGRAM = "@yogamaya_bot"
 PUBLIC_PHONE = "+7 916 123-45-67"
 
+# Telegram Login Widget bot of the sign-in page (/auth/login); set it to enable sign-in:
+# PUBLIC_TELEGRAM_LOGIN_BOT_USERNAME = "yogamaya_bot"
+
 # Secrets (set via wrangler secret put or Cloudflare dashboard):
 # TELEGRAM_BOT_TOKEN
 # NOTIFICATION_EMAIL
+# AUTH_SECRET               — signs the session cookie
+# TELEGRAM_LOGIN_BOT_TOKEN  — token of the login bot, checks the widget payload
+# ADMIN_TELEGRAM_IDS        — comma-separated ids or @usernames with the admin role
+# ADMIN_TELEGRAM_USERNAMES  — same, usernames only
+# TEACHER_TELEGRAM_IDS      — ids or @usernames with the teacher role; others are students

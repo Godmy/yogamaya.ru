@@ -1,4 +1,6 @@
-import type { Handle } from '@sveltejs/kit';
+import { error, redirect, type Handle } from '@sveltejs/kit';
+import { clearSessionCookie, readSession, SESSION_COOKIE } from '$lib/server/auth';
+import { LOCALE_COOKIE, parseLocale } from '$lib/locale';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	// Extract UTM params from URL and store in locals
@@ -25,6 +27,32 @@ export const handle: Handle = async ({ event, resolve }) => {
 		});
 	}
 
-	const response = await resolve(event);
+	// Interface language of the menu and the signed-in user
+	event.locals.locale = parseLocale(event.cookies.get(LOCALE_COOKIE));
+	event.locals.user = null;
+	const env = event.platform?.env;
+	if (env?.AUTH_SECRET) {
+		try {
+			event.locals.user = await readSession(event.cookies.get(SESSION_COOKIE), env);
+		} catch (err) {
+			console.error('auth session read failed', err);
+			clearSessionCookie(event.cookies);
+		}
+	}
+
+	// Cabinets need a session; /admin also the admin role
+	const cabinet = url.pathname === '/account' || url.pathname.startsWith('/account/');
+	const admin = url.pathname === '/admin' || url.pathname.startsWith('/admin/');
+	if ((cabinet || admin) && !event.locals.user) {
+		redirect(302, `/auth/login?to=${encodeURIComponent(url.pathname)}`);
+	}
+	if (admin && event.locals.user?.role !== 'admin') {
+		error(403, 'Forbidden');
+	}
+
+	const response = await resolve(event, {
+		transformPageChunk: ({ html }) => html.replace('%lang%', event.locals.locale)
+	});
+	if (cabinet || admin) response.headers.set('Cache-Control', 'no-store');
 	return response;
 };
